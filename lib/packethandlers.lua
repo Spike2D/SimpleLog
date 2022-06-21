@@ -266,7 +266,7 @@ packethandlers.HandleIncomingPacket = function(e)
         if new_job ~= old_job then
             gStatus.PlayerJob = e.data:byte(9)
             local jobFiltersFile = (gStatus.SettingsFolder .. '%s.lua'):fmt(new_job)
-            gStatus.LoadProfile(jobFiltersFile, 'filters') 
+            gStatus.LoadProfile(jobFiltersFile, 'filters')
         end
     end
 end

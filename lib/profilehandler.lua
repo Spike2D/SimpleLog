@@ -83,11 +83,17 @@ status.LoadProfile = function(profilePath, profileType)
 		if not success then
 			local defaultFiltersFile = gStatus.SettingsFolder .. 'default_filters.lua';
 			print(chat.header('SimpleLog') .. chat.error('Failed to load filters profile: ') .. chat.color1(2, shortFileName) .. chat.error(' loading defaults: ' .. chat.color1(2, 'default_filters.lua')));
-			gProfileFilter = defaultFiltersFile;
+			local default_success, default_loadError = loadfile(defaultFiltersFile)
+			if not default_success then
+				gFuncs.Error('Default Filters not found, Critical error.')
+				return
+			end
+			gProfileFilter = default_success();
 			gStatus.CurrentFilters = 'default_filters.lua'
 			return;
+		else
+			gProfileFilter = success();
 		end
-		gProfileFilter = success();
 		if (gProfileFilter ~= nil) then
 			print(chat.header('SimpleLog') .. chat.message('Loaded filters profile: ') .. chat.color1(2, shortFileName));
 			gStatus.CurrentFilters = shortFileName
