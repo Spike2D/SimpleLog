@@ -1,7 +1,7 @@
 # SimpleLog
-Battlemod created by Byrth
-Ported to Ashita by Spiken
-Combat and Message log parser for Ashita v4
+Battlemod created by Byrth  
+Ported to Ashita by Spiken  
+Combat and Message log parser for Ashita v4  
 
 # Features
 - Custom chat messages
