@@ -5,7 +5,7 @@ ffi.cdef[[
 
 local packethandlers = {};
 
-packethandlers.HandleIncoming0x0A = function(e)
+packethandlers.HandleIncoming0x00A = function(e)
     local id = struct.unpack('L', e.data, 0x04 + 1);
     local name = struct.unpack('c16', e.data, 0x84 + 1);
     local i,j = string.find(name, '\0');
@@ -20,10 +20,23 @@ packethandlers.HandleIncoming0x0A = function(e)
 		gStatus.SettingsFolder = ('%sconfig\\addons\\simplelog\\%s_%u\\'):fmt(AshitaCore:GetInstallPath(), gStatus.PlayerName, gStatus.PlayerId);
         gStatus.AutoLoadProfile();
         if (AshitaCore:GetMemoryManager():GetParty():GetMemberIsActive(0) == 1) then
-            Self = GetPlayerEntity()
+            if GetPlayerEntity() then
+                Self = GetPlayerEntity()
+            else
+                gPacketHandlers.DelayedSelfAssign:once(1)
+            end
             SelfPlayer = AshitaCore:GetMemoryManager():GetPlayer()
         end
     end
+    if (get_weapon_skill == nil or get_spell == nil or get_item == nil) then
+        gFuncs.PopulateSkills();
+        gFuncs.PopulateSpells();
+        gFuncs.PopulateItems();
+    end
+end
+
+packethandlers.DelayedSelfAssign = function ()
+    Self = GetPlayerEntity()
 end
 
 packethandlers.HandleIncoming0x28 = function(e)
@@ -37,7 +50,7 @@ end
 
 packethandlers.HandleIncomingPacket = function(e)
 	if (e.id == 0x00A) then
-		gPacketHandlers.HandleIncoming0x0A(e);
+		gPacketHandlers.HandleIncoming0x00A(e);
     elseif (e.id == 0x28) then
         e.data_modified = gPacketHandlers.HandleIncoming0x28(e);
     end

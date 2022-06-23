@@ -822,7 +822,11 @@ ui.render_config = function(toggle)
                 end
             imgui.EndChild()
             if imgui.Button('\xef\x95\xaf Save Changes', {imgui.GetWindowWidth()-16, 20}) then
-                ui.save_changes()
+                if not static_settings then
+                    ui.save_changes()
+                else
+                    gFuncs.Error('Saving is Disabled.')
+                end
             end
             imgui.TextDisabled(('\xef\x83\x81 %s'):fmt(addon.link))
             imgui.TextDisabled(('\xef\x87\xb9 2022 by %s'):fmt(addon.author))

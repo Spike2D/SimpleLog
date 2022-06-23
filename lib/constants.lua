@@ -9,6 +9,7 @@ item_quantity = {id = 0, count = ''}
 multi_targs = {}
 multi_actor = {}
 multi_msg = {}
+static_settings = false
 
 
 -- Blocked Messages
@@ -219,6 +220,422 @@ domain_buffs = T{
 -- Races
 female_races = T{2,4,6,7}
 male_races = T{1,3,5,8}
+
+-- Static settings
+static_colors = T{
+	mob = 69,
+	other = 8,
+	
+	p0 = 501,
+	p1 = 204,
+	p2 = 410,
+	p3 = 492,
+	p4 = 259,
+	p5 = 260,
+	
+	al0 = 205,
+	al1 = 359,
+	al2 = 167,
+	al3 = 038,
+	al4 = 125,
+	al5 = 185,
+	
+	a20 = 429,
+	a21 = 257,
+	a22 = 200,
+	a23 = 481,
+	a24 = 283,
+	a25 = 208,
+	
+	mobdmg = 0,
+	mydmg = 0,
+	partydmg = 0,
+	allydmg = 0,
+	otherdmg = 0,
+	
+	spellcol = 0,
+	mobspellcol = 0,
+	abilcol = 0,
+	wscol = 0,
+	mobwscol = 0,
+	statuscol = 0,
+	enfeebcol = 501,
+	itemcol = 256,
+}
+
+static_settings = T{
+	-- TODO; Language support yet not implemented
+	lang = T{
+		object = 1, -- 0 = Default, 1 = English, 2 = Japanese
+		internal = 0, -- 0 = Default, 1 = Japanese, 2 = English
+		msg_text = 'en', -- 'en' = English, 'jp' = Japanese
+	},
+	mode = T{
+		condensedamage = true,
+		condensetargets = true,
+		cancelmultimsg = true,
+		oxford = true,
+		commamode = false,
+		targetnumber = true,
+		condensetargetname = false,
+		swingnumber = true,
+		sumdamage = true,
+		condensecrits = false,
+		tpstatuses = true,
+		simplify = true,
+		showpetownernames = false,
+		crafting = true,
+		showblocks = true,
+		showguards = true,
+		showcritws = false,
+		showrollinfo = false,
+	},
+	text = T{
+		line_aoe		= 'AOE ${numb} '..string.char(129,168)..' ${target}',
+		line_aoebuff	= '${actor} ${abil} '..string.char(129,168)..' ${target} (${status})',
+		line_full		= '[${actor}] ${numb} ${abil} '..string.char(129,168)..' ${target}',
+		line_itemnum	= '[${actor}] ${abil} '..string.char(129,168)..' ${target} (${numb} ${item2})',
+		line_item		= '[${actor}] ${abil} '..string.char(129,168)..' ${target} (${item2})',
+		line_steal		= '[${actor}] ${abil} '..string.char(129,168)..' ${target} (${item})',
+		line_noability	= '${numb} '..string.char(129,168)..' ${target}',
+		line_noactor	= '${abil} ${numb} '..string.char(129,168)..' ${target}',
+		line_nonumber	= '[${actor}] ${abil} '..string.char(129,168)..' ${target}',
+		line_notarget	= '[${actor}] ${abil} '..string.char(129,168)..' ${number}',
+		line_roll		= '${actor} ${abil} '..string.char(129,168)..' ${target} '..string.char(129,170)..' ${number}',
+	},
+}
+
+static_filters = T{
+	me = { -- You're doing something
+		melee = false,		-- Prevents your melee ("white") damage from appearing
+		ranged = false,		-- Prevents your ranged damage from appearing
+		damage = false,		-- Prevents your damage from appearing
+		healing = false,	-- Prevents your healing from appearing
+		misses = false,		-- Prevents your misses from appearing
+		items = false,		-- Prevents your "Jim used an item. Jim gains the effect of Reraise." messages from appearing
+		uses = false,		-- Prevents your "Jim uses an item." messages from appearing
+		readies = false,	-- Prevents your "Jim readies ____" messages from appearing
+		casting = false,	-- Prevents your "Jim begins casting ____" messages from appearing
+		all = false,		-- Prevents all of your messages from appearing
+		target = true,		-- true = SHOW all actions where I am the target.
+	},
+	
+	party = { -- A party member is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+	
+	alliance = { -- A alliance member is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+
+	others = { -- Some guy nearby is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+	
+	my_pet = { -- Your pet is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+	
+	my_fellow = { -- Your adventuring fellow is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+	
+	other_pets = { -- Someone else's pet is doing something
+		melee = false,
+		ranged = false,
+		damage = false,
+		healing = false,
+		misses = false,
+		items = false,
+		uses = false,
+		readies = false,
+		casting = false,
+		all = false,
+	},
+
+	enemies = { -- Monster that your party has claimed doing something with one of the below targets
+		me = { -- He's targeting you!
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		party = { -- He's targeting a party member
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		alliance = { -- He's targeting an alliance member
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		others = { -- He's targeting some guy nearby
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		my_pet = { -- He's targeting your pet
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		my_fellow = { -- He's targeting your adventuring fellow
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		other_pets = { -- He's targeting someone else's pet
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		enemies = { -- He's targeting himself or another monster your party has claimed
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		monsters = { -- He's targeting another monster
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+	},
+	
+	monsters = { -- NPC not claimed to your party is doing something with one of the below targets
+		me = { -- He's targeting you!
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		party = { -- He's targeting a party member
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		alliance = { -- He's targeting an alliance member
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		others = { -- He's targeting some guy nearby
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		my_pet = { -- He's targeting your pet
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		my_fellow = { -- He's targeting your adventuring fellow
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		other_pets = { -- He's targeting someone else's pet
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		enemies = { -- He's targeting a monster your party has claimed
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+		
+		monsters = { -- He's targeting himself or another monster
+			melee = false,
+			ranged = false,
+			damage = false,
+			healing = false,
+			misses = false,
+			items = false,
+			uses = false,
+			readies = false,
+			casting = false,
+			all = false,
+		},
+	},
+}
 
 get_weapon_skill = nil
 get_job_ability = nil

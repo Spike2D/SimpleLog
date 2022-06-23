@@ -68,8 +68,8 @@ status.LoadProfile = function(profilePath, profileType)
 
 	if (profileType == 'config') then
 		if not success then
-			gProfileSettings = nil;
-			print(chat.header('SimpleLog') .. chat.error('Failed to load configuration file: ') .. chat.color1(2, shortFileName));
+			gProfileSettings = static_settings;
+			print(chat.header('SimpleLog') .. chat.error('Failed to load configuration file: ') .. chat.color1(2, shortFileName)..chat.error('\nSaving will be disabled.'));
 			print(chat.header('SimpleLog') .. chat.error(loadError));
 			return;
 		end
@@ -83,9 +83,12 @@ status.LoadProfile = function(profilePath, profileType)
 		if not success then
 			local defaultFiltersFile = gStatus.SettingsFolder .. 'default_filters.lua';
 			print(chat.header('SimpleLog') .. chat.error('Failed to load filters profile: ') .. chat.color1(2, shortFileName) .. chat.error(' loading defaults: ' .. chat.color1(2, 'default_filters.lua')));
+			print(chat.header('SimpleLog') .. chat.error(loadError));
 			local default_success, default_loadError = loadfile(defaultFiltersFile)
 			if not default_success then
-				gFuncs.Error('Default Filters not found, Critical error.')
+				gProfileFilter = static_filters;
+				print(chat.header('SimpleLog') .. chat.error('Failed to load filters profile: ') .. chat.color1(2, 'default_filters.lua')..chat.error('\nSaving will be disabled.'));
+				print(chat.header('SimpleLog') .. chat.error(default_loadError));
 				return
 			end
 			gProfileFilter = default_success();
@@ -102,8 +105,8 @@ status.LoadProfile = function(profilePath, profileType)
 	
 	if (profileType == 'colors') then
 		if not success then
-			gProfileColor = nil;
-			print(chat.header('SimpleLog') .. chat.error('Failed to load colors profile: ') .. chat.color1(2, shortFileName));
+			gProfileColor = static_colors;
+			print(chat.header('SimpleLog') .. chat.error('Failed to load colors profile: ') .. chat.color1(2, shortFileName)..chat.error('\nSaving will be disabled.'));
 			print(chat.header('SimpleLog') .. chat.error(loadError));
 			return;
 		end
