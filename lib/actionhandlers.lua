@@ -1025,7 +1025,7 @@ actionhandlers.SpellParse = function (act)
 
         if fields.item2 then
             local item_article = not gProfileSettings.mode.simplify and gFuncs.AddItemArticle(effect_val) or ''
-            local tempspell = (msg_ID == 377 or msg_ID == 674) and get_item[effect_val] and get_item[effect_val].LogNamePlural[gProfileSettings.lang.object] or item_article..get_item[effect_val].LogNameSingular[effect_val]
+            local tempspell = (msg_ID == 377 or msg_ID == 674) and get_item[effect_val] and get_item[effect_val].LogNamePlural[gProfileSettings.lang.object] or item_article..get_item[effect_val].LogNameSingular[gProfileSettings.lang.object]
             spell.item2 = gFuncs.ColorIt(tempspell, gProfileColor.itemcol)
             spell.item2_id = effect_val
             if fields.number then
