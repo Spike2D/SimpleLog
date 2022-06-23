@@ -19,13 +19,14 @@ packethandlers.HandleIncoming0x00A = function(e)
         gStatus.PlayerJob = job;
 		gStatus.SettingsFolder = ('%sconfig\\addons\\simplelog\\%s_%u\\'):fmt(AshitaCore:GetInstallPath(), gStatus.PlayerName, gStatus.PlayerId);
         gStatus.AutoLoadProfile();
-        if (AshitaCore:GetMemoryManager():GetParty():GetMemberIsActive(0) == 1) then
+        if (AshitaCore:GetMemoryManager():GetParty():GetMemberIsActive(0) == 1) or initial_load then
             if GetPlayerEntity() then
                 Self = GetPlayerEntity()
             else
                 gPacketHandlers.DelayedSelfAssign:once(1)
             end
             SelfPlayer = AshitaCore:GetMemoryManager():GetPlayer()
+            initial_load = false
         end
     end
     if (get_weapon_skill == nil or get_spell == nil or get_item == nil) then

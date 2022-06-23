@@ -10,6 +10,7 @@ multi_targs = {}
 multi_actor = {}
 multi_msg = {}
 static_settings = false
+initial_load = true
 
 
 -- Blocked Messages
