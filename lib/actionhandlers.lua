@@ -933,7 +933,7 @@ actionhandlers.SpellParse = function (act)
                 if abil_ID < 256 then
                     spell.data = get_weapon_skill[abil_ID] -- May have to correct for charmed pets some day, but I'm not sure there are any monsters with TP moves that give no message.
                 else
-                    spell.data = get_mon_ability[abil_ID]
+                    spell.data = get_mon_ability[abil_ID][gProfileSettings.lang.object]
                 end
             elseif T{5, 9}:contains(act['category']) then
                 spell.data = get_item[abil_ID]
@@ -962,7 +962,7 @@ actionhandlers.SpellParse = function (act)
             end
         elseif fields.weapon_skill then
             if abil_ID > 256 then -- WZ_RECOVER_ALL is used by chests in Limbus
-                spell.data = get_mon_ability[abil_ID]
+                spell.data = get_mon_ability[abil_ID][gProfileSettings.lang.object]
                 if not spell.data then
                     spell.data = {Name = {1, 2}}
                     spell.data.Name[1] = 'Special Attack'
@@ -1010,14 +1010,15 @@ actionhandlers.SpellParse = function (act)
         if fields.item then
             if T{125,593,594,595,596,597,598,599}:contains(msg_ID) then
                 local item_article = not gProfileSettings.mode.simplify and gFuncs.AddItemArticle(effect_val) or ''
-                spell.item = gFuncs.ColorIt(item_article..get_item[effect_val].LogNameSingular[gProfileSettings.lang.object], gProfileColor.itemcol)
+
+                spell.item = gFuncs.ColorIt(get_item[effect_val].LogNameSingular[gProfileSettings.lang.object] and item_article..get_item[effect_val].LogNameSingular[gProfileSettings.lang.object] or item_article..get_item[effect_val].Name[gProfileSettings.lang.object], gProfileColor.itemcol)
                 spell.item_id = abil_ID
             else
                 spell.data = get_item[abil_ID]
                 local item_article = not gProfileSettings.mode.simplify and gFuncs.AddItemArticle(spell.data.Id) or ''
                 if spell.data then
-                    spell.name = gFuncs.ColorIt(item_article..spell.data.LogNameSingular[gProfileSettings.lang.object], gProfileColor.itemcol)
-                    spell.item = gFuncs.ColorIt(item_article..spell.data.LogNameSingular[gProfileSettings.lang.object], gProfileColor.itemcol)
+                    spell.name = gFuncs.ColorIt(spell.data.LogNameSingular[gProfileSettings.lang.object] and item_article..spell.data.LogNameSingular[gProfileSettings.lang.object] or item_article..spell.data.Name[gProfileSettings.lang.object], gProfileColor.itemcol)
+                    spell.item = gFuncs.ColorIt(spell.data.LogNameSingular[gProfileSettings.lang.object] and item_article..spell.data.LogNameSingular[gProfileSettings.lang.object] or item_article..spell.data.Name[gProfileSettings.lang.object], gProfileColor.itemcol)
                     spell.item_id = abil_ID
                 end
             end
@@ -1025,7 +1026,7 @@ actionhandlers.SpellParse = function (act)
 
         if fields.item2 then
             local item_article = not gProfileSettings.mode.simplify and gFuncs.AddItemArticle(effect_val) or ''
-            local tempspell = (msg_ID == 377 or msg_ID == 674) and get_item[effect_val] and get_item[effect_val].LogNamePlural[gProfileSettings.lang.object] or item_article..get_item[effect_val].LogNameSingular[gProfileSettings.lang.object]
+            local tempspell = (msg_ID == 377 or msg_ID == 674) and get_item[effect_val] and get_item[effect_val].LogNamePlural[gProfileSettings.lang.object] and get_item[effect_val].LogNamePlural[gProfileSettings.lang.object] or get_item[effect_val].LogNameSingular[gProfileSettings.lang.object] and item_article..get_item[effect_val].LogNameSingular[gProfileSettings.lang.object] or item_article..get_item[effect_val].Name[gProfileSettings.lang.object]
             spell.item2 = gFuncs.ColorIt(tempspell, gProfileColor.itemcol)
             spell.item2_id = effect_val
             if fields.number then

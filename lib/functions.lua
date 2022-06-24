@@ -8,6 +8,7 @@ local PopulateSkills = function()
 	local t1 = {}
 	local t2 = {}
 	local t3 = {}
+    local t4 = {}
 
 	local index = 1
 	for i = 1, 4116, 1 do
@@ -43,7 +44,22 @@ local PopulateSkills = function()
             break
 		end
 	end
-	get_mon_ability = t3
+	get_mon_skill = t3
+
+    index = 0x101
+    for i = 1, 4116, 1 do
+        local j_ability_en = AshitaCore:GetResourceManager():GetString('monsters.abilities', i, 2)
+        local j_ability_jp = AshitaCore:GetResourceManager():GetString('monsters.abilities', i, 1)
+        if j_ability_en then
+            t4[index] = {1, 2}
+            t4[index][1] = j_ability_en
+            t4[index][2] = j_ability_jp
+            index = index + 1
+        else
+            break
+        end
+    end
+    get_mon_ability = t4
 end
 
 local PopulateSpells = function()
@@ -442,6 +458,7 @@ local ItemArticleFix = function (id, id2, msg)
 			end
 		end
 	end
+    return msg
 end
 
 local AddItemArticle = function(item_id)

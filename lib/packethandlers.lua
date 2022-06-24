@@ -203,7 +203,7 @@ packethandlers.HandleIncomingPacket = function(e)
                 if not get_item[am.param_1] then
                     e.blocked = false
                 end
-                item = get_item[am.param_1].LogNameSingular[gProfileSettings.lang.object]
+                item = get_item[am.param_1].LogNameSingular[gProfileSettings.lang.object] and get_item[am.param_1].LogNameSingular[gProfileSettings.lang.object] or get_item[am.param_1].Name[gProfileSettings.lang.object]
             end
 
             if fields.number then

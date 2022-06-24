@@ -251,31 +251,26 @@ ui.render_config = function(toggle)
             imgui.BeginChild('conf_box', { imgui.GetWindowWidth()-16, imgui.GetWindowHeight()-120 }, true)
                 imgui.PopStyleColor()
                 if ui.state.tab == 0 then
-                    -- local lang_choices = {'Default', 'English', 'Japanese'}
+                    local lang_choices = {'English', 'Japanese'}
 
-                    -- -- Language support yet not implemented
-                    -- imgui.TextColored(header_text_col, ' Language')
-                    -- imgui.ShowHelp('Language Configuration:\nChanges the language of output messages.', true)
-
-                    --     -- Language support yet not implemented
-                    --     if imgui.BeginCombo('', lang_choices[gProfileSettings.lang.object + 1]) then
-                    --         if imgui.Selectable('Default', choice == 1) then
-                    --             gProfileSettings.lang.object = 0
-                    --             gProfileSettings.lang.internal = 0
-                    --             gProfileSettings.lang.msg_text = 'en'
-                    --         end
-                    --         if imgui.Selectable('English', choice == 2) then
-                    --             gProfileSettings.lang.object = 1
-                    --             gProfileSettings.lang.internal = 2
-                    --             gProfileSettings.lang.msg_text = 'en'
-                    --         end
-                    --         if imgui.Selectable('Japanese', choice == 3) then
-                    --             gProfileSettings.lang.object = 2
-                    --             gProfileSettings.lang.internal = 1
-                    --             gProfileSettings.lang.msg_text = 'jp'
-                    --         end
-                    --         imgui.EndCombo()
-                    --     end
+                    -- Language support yet not fully implemented
+                    imgui.PushTextWrapPos(0)
+                    imgui.TextColored(theme.desc_text_col, 'Language Option:\nSwitch between English or Japanese message outputs.')
+                    -- Temp Warning
+                    imgui.TextColored({1.0, 0.0, 0.0, 1.0}, 'EXPERIMENTAL')
+                    if imgui.BeginCombo('', lang_choices[gProfileSettings.lang.object]) then
+                        if imgui.Selectable('English', choice == 1) then
+                            gProfileSettings.lang.object = 1
+                            gProfileSettings.lang.internal = 2
+                            gProfileSettings.lang.msg_text = 'en'
+                        end
+                        if imgui.Selectable('Japanese', choice == 2) then
+                            gProfileSettings.lang.object = 2
+                            gProfileSettings.lang.internal = 1
+                            gProfileSettings.lang.msg_text = 'en'
+                        end
+                        imgui.EndCombo()
+                    end
 
                     imgui.PushTextWrapPos(0)
                     imgui.TextColored(theme.desc_text_col, 'General Options:\nChange different modes of how the addon output messages.')
@@ -822,7 +817,7 @@ ui.render_config = function(toggle)
                 end
             imgui.EndChild()
             if imgui.Button('\xef\x95\xaf Save Changes', {imgui.GetWindowWidth()-16, 20}) then
-                if not static_settings then
+                if not static_config then
                     ui.save_changes()
                 else
                     gFuncs.Error('Saving is Disabled.')
@@ -831,7 +826,6 @@ ui.render_config = function(toggle)
             imgui.TextDisabled(('\xef\x83\x81 %s'):fmt(addon.link))
             imgui.TextDisabled(('\xef\x87\xb9 2022 by %s'):fmt(addon.author))
         imgui.EndGroup()
-    --print('settings open')
     end
     imgui.End()
 end

@@ -71,6 +71,7 @@ status.LoadProfile = function(profilePath, profileType)
 			gProfileSettings = static_settings;
 			print(chat.header('SimpleLog') .. chat.error('Failed to load configuration file: ') .. chat.color1(2, shortFileName)..chat.error('\nSaving will be disabled.'));
 			print(chat.header('SimpleLog') .. chat.error(loadError));
+			static_config = true
 			return;
 		end
 		gProfileSettings = success();
@@ -89,6 +90,7 @@ status.LoadProfile = function(profilePath, profileType)
 				gProfileFilter = static_filters;
 				print(chat.header('SimpleLog') .. chat.error('Failed to load filters profile: ') .. chat.color1(2, 'default_filters.lua')..chat.error('\nSaving will be disabled.'));
 				print(chat.header('SimpleLog') .. chat.error(default_loadError));
+				static_config = true
 				return
 			end
 			gProfileFilter = default_success();
@@ -108,6 +110,7 @@ status.LoadProfile = function(profilePath, profileType)
 			gProfileColor = static_colors;
 			print(chat.header('SimpleLog') .. chat.error('Failed to load colors profile: ') .. chat.color1(2, shortFileName)..chat.error('\nSaving will be disabled.'));
 			print(chat.header('SimpleLog') .. chat.error(loadError));
+			static_config = true
 			return;
 		end
 		gProfileColor = success();

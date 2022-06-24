@@ -9,7 +9,7 @@ item_quantity = {id = 0, count = ''}
 multi_targs = {}
 multi_actor = {}
 multi_msg = {}
-static_settings = false
+static_config = false
 initial_load = true
 
 
@@ -640,6 +640,7 @@ static_filters = T{
 
 get_weapon_skill = nil
 get_job_ability = nil
+get_mon_skill = nil
 get_mon_ability = nil
 get_spell = nil
 get_item = nil

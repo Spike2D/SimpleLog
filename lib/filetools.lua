@@ -77,7 +77,21 @@ local SaveChanges = function (path, mod_table, file_type)
 
             for i, v in pairs(mod_table) do
                 for n, m in pairs(mod_table[i]) do
-                    if i ~= 'text' and i ~= 'lang' then
+                    if i == 'lang' then
+                        local file_value = file_data:match(tostring(n)..'[%s%S]-[=][%s%S]-[,]')
+                        :gsub(tostring(n)..'[%s%S]-[=][%s%S]-', '')
+                        :gsub('"', '')
+                        :gsub('[,]', '')
+                        :gsub(' ', '')
+
+                        if tostring(file_value) ~= tostring(mod_table[i][n]) then
+                            if type(mod_table[i][n]) == "number" then
+                                file_data = string.gsub(file_data, tostring(n)..'[%s%S]-[=][%s%S]-[,]', tostring(n)..' = '..tostring(mod_table[i][n])..',', 1)
+                            elseif type(mod_table[i][n]) == "string" then
+                                file_data = string.gsub(file_data, tostring(n)..'[%s%S]-[=][%s%S]-[,]', tostring(n)..' = '..'"'..tostring(mod_table[i][n])..'",', 1)
+                            end
+                        end
+                    elseif i == 'mode' then
                         local file_value = file_data:match(tostring(n)..'[%s%S]-[=][%s%S]-[,]')
                         :gsub(tostring(n)..'[%s%S]-[=][%s%S]-', '')
                         :gsub('[,]', '')
