@@ -51,9 +51,9 @@ local PopulateSkills = function()
         local j_ability_en = AshitaCore:GetResourceManager():GetString('monsters.abilities', i, 2)
         local j_ability_jp = AshitaCore:GetResourceManager():GetString('monsters.abilities', i, 1)
         if j_ability_en then
-            t4[index] = {1, 2}
-            t4[index][1] = j_ability_en
-            t4[index][2] = j_ability_jp
+            t4[index] = {Name = {1, 2}}
+            t4[index].Name[1] = j_ability_en
+            t4[index].Name[2] = j_ability_jp
             index = index + 1
         else
             break
