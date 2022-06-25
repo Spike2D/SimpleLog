@@ -239,7 +239,7 @@ actionhandlers.parse_action_packet = function(act)
                 
                 -- Some messages uses the english log version of the buff
                 if not gProfileSettings.mode.simplify and log_form_messages:contains(m.message) then
-                    m.status = AshitaCore:GetResourceManager():GetString('buffs.names_log', m.param, gProfileSettings.lang.internal)
+                    m.status = AshitaCore:GetResourceManager():GetString('buffs.names_log', m.param, 2)
                 end
 
                 -- if m.message == 93 or m.message == 273 then m.status = gFuncs.ColorIt('Vanish', gProfileColor['statuscol']) end

@@ -106,7 +106,7 @@ local GetPartyData = function()
 	local resource = {}
 
 	parse_party(resource, 'p', 0, AshitaCore:GetMemoryManager():GetParty():GetAlliancePartyMemberCount1())
-	parse_party(resource, 'a1', 6, AshitaCore:GetMemoryManager():GetParty():GetAlliancePartyMemberCount2())
+	parse_party(resource, 'al', 6, AshitaCore:GetMemoryManager():GetParty():GetAlliancePartyMemberCount2())
 	parse_party(resource, 'a2', 12, AshitaCore:GetMemoryManager():GetParty():GetAlliancePartyMemberCount3())
 
 	return resource
