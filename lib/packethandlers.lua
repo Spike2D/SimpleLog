@@ -142,7 +142,7 @@ packethandlers.HandleIncomingPacket = function(e)
             -- Condenses across multiple packets
             local status
 
-            if enfeebling:contains(am.param_1) and AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1, gProfileSettings.lang.internal) then
+            if enfeebling:contains(am.param_1) and AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1) then
                 status = gFuncs.ColorIt(AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1, gProfileSettings.lang.internal), gProfileColor.enfeebcol)
             elseif gProfileColor.statuscol == 0 then
                 status = gFuncs.ColorIt(AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1, gProfileSettings.lang.internal), 0)
@@ -179,9 +179,9 @@ packethandlers.HandleIncomingPacket = function(e)
 
             local fields = gFuncs.SearchField(outstr)
 
-            if fields.stauts then
+            if fields.status then
                 if log_form_messages:contains(am.message_id) then
-                    status =  AshitaCore:GetResourceManager():GetString('buffs.names_log', am.param_1, gProfileSettings.lang.internal)
+                    status =  AshitaCore:GetResourceManager():GetString('buffs.names_log', am.param_1, 2)
                 else
                     status = AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1, gProfileSettings.lang.internal)
                 end
@@ -274,6 +274,8 @@ packethandlers.HandleIncomingPacket = function(e)
                 AshitaCore:GetChatManager():AddChatMessage(8, false, ' -------------- HQ Tier 3! --------------')
             end
         end
+
+    ------------- JOB INFO ----------------
     elseif e.id == 0x01B then
         local new_job = AshitaCore:GetResourceManager():GetString("jobs.names_abbr", e.data:byte(9))
         local old_job = AshitaCore:GetResourceManager():GetString("jobs.names_abbr", gStatus.PlayerJob)
