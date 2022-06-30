@@ -15,7 +15,6 @@ Combat and Message log parser for Ashita v4
 - **/simplelog** or **/slog** - Calls the configuration menu.
 
 # Planned features
-- Language selection
 - Removal of Windower Resource files
 
 # Credits
