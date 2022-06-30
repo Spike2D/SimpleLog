@@ -28,6 +28,7 @@ addon.link      = 'https://github.com/Spike2D/SimpleLog';
 require('common');
 require('lib\\constants');
 chat				= require('chat');
+UTF8toSJIS			= require('lib\\shift_jis')
 
 res_actmsg			= require('lib\\res\\action_messages')
 res_igramm			= require('lib\\res\\items_grammar')

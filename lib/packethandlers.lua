@@ -104,8 +104,14 @@ packethandlers.HandleIncomingPacket = function(e)
 
         local actor = gActionHandlers.ActorParse(am.actor_id)
         local target = gActionHandlers.ActorParse(am.target_id)
-        local actor_article = common_nouns:contains(am.actor_id) and 'The ' or ''
-        local target_article = common_nouns:contains(am.target_id) and 'The ' or ''
+        local actor_article = ''
+        if gProfileSettings.lang.msg_text ~= 'jp' then
+            actor_article = common_nouns:contains(am.actor_id) and 'The ' or ''
+        end
+        local target_article = ''
+        if gProfileSettings.lang.msg_text ~= 'jp' then
+            target_article = common_nouns:contains(am.target_id) and 'The ' or ''
+        end
         targets_condensed = false
 
         -- Filter these messages
@@ -124,13 +130,19 @@ packethandlers.HandleIncomingPacket = function(e)
                 :gsub('${numb}',number or '')
                 AshitaCore:GetChatManager():AddChatMessage(color, false, msg)
             else
-                local msg = res_actmsg[am.message_id][gProfileSettings.lang.msg_text]
-                msg = gFuncs.GrammaticalNumberFix(msg, number, am.message_id)
-                if plural_entities:contains(am.actor_id) then
-                    msg = gFuncs.PluralActor(msg, am.message_id)
-                end
-                if plural_entities:contains(am.target_id) then
-                    msg = gFuncs.PluralTarget(msg, am.message_id)
+                local msg = nil
+                if gProfileSettings.lang.msg_text == 'jp' then
+                    msg = res_actmsg[am.message_id]['jp']
+                    msg = UTF8toSJIS:UTF8_to_SJIS_str_cnv(msg)
+                else
+                    msg = res_actmsg[am.message_id]['en']
+                    msg = gFuncs.GrammaticalNumberFix(msg, number, am.message_id)
+                    if plural_entities:contains(am.actor_id) then
+                        msg = gFuncs.PluralActor(msg, am.message_id)
+                    end
+                    if plural_entities:contains(am.target_id) then
+                        msg = gFuncs.PluralTarget(msg, am.message_id)
+                    end
                 end
                 local msg = gFuncs.CleanMsg(msg
                 :gsub('${status}',status or '')
@@ -169,12 +181,18 @@ packethandlers.HandleIncomingPacket = function(e)
             am.message_id = false
         elseif passed_messages:contains(am.message_id) then
             local item, status, spell, skill, number, number2
-            local outstr = res_actmsg[am.message_id][gProfileSettings.lang.msg_text]
-            if plural_entities:contains(am.actor_id) then
-                outstr = gFuncs.PluralActor(outstr, am.message_id)
-            end
-            if plural_entities:contains(am.target_id) then
-                outstr = gFuncs.PluralTarget(outstr, am.message_id)
+            local outstr = nil
+            if gProfileSettings.lang.msg_text == 'jp' then
+                outstr = res_actmsg[am.message_id]['jp']
+                outstr = UTF8toSJIS:UTF8_to_SJIS_str_cnv(outstr)
+            else
+                outstr = res_actmsg[am.message_id][gProfileSettings.lang.msg_text]
+                if plural_entities:contains(am.actor_id) then
+                    outstr = gFuncs.PluralActor(outstr, am.message_id)
+                end
+                if plural_entities:contains(am.target_id) then
+                    outstr = gFuncs.PluralTarget(outstr, am.message_id)
+                end
             end
 
             local fields = gFuncs.SearchField(outstr)
@@ -215,7 +233,12 @@ packethandlers.HandleIncomingPacket = function(e)
             end
 
             if fields.skill and res_skills[am.param_1] then
-                skill = res_skills[am.param_1][gProfileSettings.lang.msg_text]:lower()
+                if gProfileSettings.lang.msg_text == 'jp' then
+                    skill = res_skills[am.param_1][gProfileSettings.lang.msg_text]
+                    skill = UTF8toSJIS:UTF8_to_SJIS_str_cnv(skill)
+                else
+                    skill = res_skills[am.param_1][gProfileSettings.lang.msg_text]:lower()
+                end
             end
 
             if am.message_id > 169 and am.message_id < 179 then
@@ -290,7 +313,14 @@ end
 packethandlers.multi_packet = function(...)
     local ind = table.concat({...}, ' ')
     local targets = gActionHandlers.AssembleTargets(multi_actor[ind], multi_targs[ind], 0, multi_msg[ind])
-    local outstr = targets_condensed and gFuncs.PluralTarget(res_actmsg[multi_msg[ind]][gProfileSettings.lang.msg_text], multi_msg[ind]) or res_actmsg[multi_msg[ind]][gProfileSettings.lang.msg_text]
+    local msg = nil
+    if gProfileSettings.lang.msg_text == 'jp' then
+        msg = res_actmsg[multi_msg[ind]]['jp']
+        msg = UTF8toSJIS:UTF8_to_SJIS_str_cnv(msg)
+    else
+        msg = res_actmsg[multi_msg[ind]]['en']
+    end
+    local outstr = targets_condensed and gProfileSettings.lang.msg_text ~= 'jp' and gFuncs.PluralTarget(msg, multi_msg[ind]) or msg
     outstr = gFuncs.CleanMsg(outstr
     :gsub('${target}\'s',targets)
     :gsub('${target}',targets)

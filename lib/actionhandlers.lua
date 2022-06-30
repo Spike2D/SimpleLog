@@ -183,57 +183,99 @@ actionhandlers.parse_action_packet = function(act)
                 local col = res_actmsg[m.message].color
                 local targ =  gActionHandlers.AssembleTargets(act.actor, v.target, act.category, m.message)
                 local color = gActionHandlers.ColorFilt(col, v.target[1].server_id == Self.ServerId)
-                if m.reaction == 11 and act.category == 1 then m.simp_name = 'parried by'
-                -- elseif m.reaction == 12 and act.category == 1 then m.simp_name = 'blocked by'
-                elseif m.message == 1 and (act.category == 1 or act.category == 11) then m.simp_name = 'hit'
-                elseif m.message == 15 then m.simp_name = 'missed'
-                elseif m.message == 29 or m.message == 84 then m.simp_name = 'is paralyzed'
-                elseif m.message == 30 then m.simp_name = 'anticipated by'
-                elseif m.message == 31 then m.simp_name = 'absorbed by'
-                elseif m.message == 32 then m.simp_name = 'dodged by'
-                elseif m.message == 67 and (act.category == 1 or act.category == 11) then m.simp_name = 'critical hit'
-                elseif m.message == 106 then m.simp_name = 'intimidated by'
-                elseif m.message == 153 then m.simp_name = act.action.name..' fails'
-                elseif m.message == 244 then m.simp_name = 'Mug fails'
-                elseif m.message == 282 then m.simp_name = 'evaded by'
-                elseif m.message == 373 then m.simp_name = 'absorbed by'
-                elseif m.message == 352 then m.simp_name = 'RA'
-                elseif m.message == 353 then m.simp_name = 'critical RA'
-                elseif m.message == 354 then m.simp_name = 'missed RA'
-                elseif m.message == 576 then m.simp_name = 'RA hit squarely'
-                elseif m.message == 577 then m.simp_name = 'RA struck true'
-                elseif m.message == 157 then m.simp_name = 'Barrage'
-                elseif m.message == 76 then m.simp_name = 'No targets within range'
-                elseif m.message == 77 then m.simp_name = 'Sange'
-                elseif m.message == 360 then m.simp_name = act.action.name..' (JA reset)'
-                elseif m.message == 426 or m.message == 427 then m.simp_name = 'Bust! '..act.action.name
-                elseif m.message == 435 or m.message == 436 then m.simp_name = act.action.name..' (JAs)'
-                elseif m.message == 437 or m.message == 438 then m.simp_name = act.action.name..' (JAs and TP)'
-                elseif m.message == 439 or m.message == 440 then m.simp_name = act.action.name..' (SPs, JAs, TP, and MP)'
-                elseif T{252,265,268,269,271,272,274,275,379,650,747}:contains(m.message) then m.simp_name = 'Magic Burst! '..act.action.name
-                elseif not act.action then
-                    m.simp_name = ''
-                    act.action = {}
-                else m.simp_name = act.action.name or ''
+                if gProfileSettings.lang.msg_text == 'jp' then
+                    if m.reaction == 11 and act.category == 1 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('によって受け流された')
+                    -- elseif m.reaction == 12 and act.category == 1 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('によってブロックされました')
+                    elseif m.message == 1 and (act.category == 1 or act.category == 11) then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の攻撃')
+                    elseif m.message == 15 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('ミス')
+                    elseif m.message == 29 or m.message == 84 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('麻痺している')
+                    elseif m.message == 30 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('期待される')
+                    elseif m.message == 31 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('吸収された')
+                    elseif m.message == 32 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('ダッジ')
+                    elseif m.message == 67 and (act.category == 1 or act.category == 11) then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の攻撃クリティカル')
+                    elseif m.message == 106 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('に脅迫')
+                    elseif m.message == 153 then m.simp_name = act.action.name..UTF8toSJIS:UTF8_to_SJIS_str_cnv(' 失敗')
+                    elseif m.message == 244 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('のかすめとるにミス')
+                    elseif m.message == 282 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('によって回避')
+                    elseif m.message == 373 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('つ吸収した')
+                    elseif m.message == 352 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('遠撃')
+                    elseif m.message == 353 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('クリティカル 遠撃')
+                    elseif m.message == 354 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('ミス 遠撃')
+                    elseif m.message == 576 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('遠撃 直撃')
+                    elseif m.message == 577 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('遠撃 直撃')
+                    elseif m.message == 157 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の乱れ撃ち')
+                    elseif m.message == 76 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('範囲内にターゲットがありません')
+                    elseif m.message == 77 then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の散華')
+                    elseif m.message == 360 then m.simp_name = act.action.name..UTF8toSJIS:UTF8_to_SJIS_str_cnv(' (JA リセット)')
+                    elseif m.message == 426 or m.message == 427 then m.simp_name = 'Bust! '..act.action.name
+                    elseif m.message == 435 or m.message == 436 then m.simp_name = act.action.name..' (JAs)'
+                    elseif m.message == 437 or m.message == 438 then m.simp_name = act.action.name..UTF8toSJIS:UTF8_to_SJIS_str_cnv(' (JAs と TP)')
+                    elseif m.message == 439 or m.message == 440 then m.simp_name = act.action.name..UTF8toSJIS:UTF8_to_SJIS_str_cnv(' (SPs, JAs, TP, と MP)')
+                    elseif T{252,265,268,269,271,272,274,275,379,650,747}:contains(m.message) then m.simp_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv('マジックバースト! ')..act.action.name
+                    elseif not act.action then
+                        m.simp_name = ''
+                        act.action = {}
+                    else m.simp_name = act.action.name or ''
+                    end
+                else
+                    if m.reaction == 11 and act.category == 1 then m.simp_name = 'parried by'
+                    -- elseif m.reaction == 12 and act.category == 1 then m.simp_name = 'blocked by'
+                    elseif m.message == 1 and (act.category == 1 or act.category == 11) then m.simp_name = 'hit'
+                    elseif m.message == 15 then m.simp_name = 'missed'
+                    elseif m.message == 29 or m.message == 84 then m.simp_name = 'is paralyzed'
+                    elseif m.message == 30 then m.simp_name = 'anticipated by'
+                    elseif m.message == 31 then m.simp_name = 'absorbed by'
+                    elseif m.message == 32 then m.simp_name = 'dodged by'
+                    elseif m.message == 67 and (act.category == 1 or act.category == 11) then m.simp_name = 'critical hit'
+                    elseif m.message == 106 then m.simp_name = 'intimidated by'
+                    elseif m.message == 153 then m.simp_name = act.action.name..' fails'
+                    elseif m.message == 244 then m.simp_name = 'Mug fails'
+                    elseif m.message == 282 then m.simp_name = 'evaded by'
+                    elseif m.message == 373 then m.simp_name = 'absorbed by'
+                    elseif m.message == 352 then m.simp_name = 'RA'
+                    elseif m.message == 353 then m.simp_name = 'critical RA'
+                    elseif m.message == 354 then m.simp_name = 'missed RA'
+                    elseif m.message == 576 then m.simp_name = 'RA hit squarely'
+                    elseif m.message == 577 then m.simp_name = 'RA struck true'
+                    elseif m.message == 157 then m.simp_name = 'Barrage'
+                    elseif m.message == 76 then m.simp_name = 'No targets within range'
+                    elseif m.message == 77 then m.simp_name = 'Sange'
+                    elseif m.message == 360 then m.simp_name = act.action.name..' (JA reset)'
+                    elseif m.message == 426 or m.message == 427 then m.simp_name = 'Bust! '..act.action.name
+                    elseif m.message == 435 or m.message == 436 then m.simp_name = act.action.name..' (JAs)'
+                    elseif m.message == 437 or m.message == 438 then m.simp_name = act.action.name..' (JAs and TP)'
+                    elseif m.message == 439 or m.message == 440 then m.simp_name = act.action.name..' (SPs, JAs, TP, and MP)'
+                    elseif T{252,265,268,269,271,272,274,275,379,650,747}:contains(m.message) then m.simp_name = 'Magic Burst! '..act.action.name
+                    elseif not act.action then
+                        m.simp_name = ''
+                        act.action = {}
+                    else m.simp_name = act.action.name or ''
+                    end
                 end
                 
                 -- Debuff Application Messages
                 if gProfileSettings.mode.simplify and message_map[82]:contains(m.message) then
-                    if m.status == 'Evasion Down' then
-                        m.message = 237
-                    end
-                    if m.status == 'addle' then m.status = 'addled'
-                    elseif m.status == 'bind' then m.status = 'bound'
-                    elseif m.status == 'blindness' then m.status = 'blinded'
-                    elseif m.status == 'Inundation' then m.status = 'inundated'
-                    elseif m.status == 'paralysis' then m.status = 'paralyzed'
-                    elseif m.status == 'petrification' then m.status = 'petrified'
-                    elseif m.status == 'poison' then m.status = 'poisoned'
-                    elseif m.status == 'silence' then m.status = 'silenced'
-                    elseif m.status == 'sleep' then m.status = 'asleep'
-                    elseif m.status == 'slow' then m.status = 'slowed'
-                    elseif m.status == 'stun' then m.status = 'stunned'
-                    elseif m.status == 'weight' then m.status = 'weighed down'
+                    if gProfileSettings.lang.msg_text == 'jp' then
+                        if m.param == 148 or m.param == 562 then
+                            m.message = 237
+                        end
+                    else
+                        if m.status == 'Evasion Down' then
+                            m.message = 237
+                        end
+                        if m.status == 'addle' then m.status = 'addled'
+                        elseif m.status == 'bind' then m.status = 'bound'
+                        elseif m.status == 'blindness' then m.status = 'blinded'
+                        elseif m.status == 'Inundation' then m.status = 'inundated'
+                        elseif m.status == 'paralysis' then m.status = 'paralyzed'
+                        elseif m.status == 'petrification' then m.status = 'petrified'
+                        elseif m.status == 'poison' then m.status = 'poisoned'
+                        elseif m.status == 'silence' then m.status = 'silenced'
+                        elseif m.status == 'sleep' then m.status = 'asleep'
+                        elseif m.status == 'slow' then m.status = 'slowed'
+                        elseif m.status == 'stun' then m.status = 'stunned'
+                        elseif m.status == 'weight' then m.status = 'weighed down'
+                        end
                     end
                 end
                 
@@ -286,13 +328,15 @@ actionhandlers.parse_action_packet = function(act)
                     m.simp_name = '(Too Far)'
                 end
                 local msg, numb = gActionHandlers.SimplifyMessage(m.message)
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text == 'jp' then
+                    msg = UTF8toSJIS:UTF8_to_SJIS_str_cnv(msg)
+                end
                 if not gProfileColor[act.actor.owner or act.actor.type] then
                     gFuncs.Error('SimpleLog error, missing filter:'..tostring(act.actor.owner)..' '..tostring(act.actor.type))
                 end
-                
                 if m.fields.status then numb = m.status else numb = gActionHandlers.PrefSuf((m.message == 674 and m.add_effect_param or m.cparam or m.param), m.message,act.actor.damage, col) end
 
-                if msg and m.message == 70 and not gProfileSettings.mode.simplify then -- fix pronoun on parry
+                if msg and m.message == 70 and not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text ~= 'jp' then -- fix pronoun on parry
                     if v.target[1].race == 0 then
                         msg = msg:gsub(' his ', ' her ')
                     elseif female_races:contains(v.target[1].race) then
@@ -307,7 +351,7 @@ actionhandlers.parse_action_packet = function(act)
                     count = '${count}'
                 end
 
-                if not gProfileSettings.mode.simplify then
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text ~= 'jp' then
                     if col == 'D' or grammar_numb_msg:contains(m.message) then
                         msg = gFuncs.GrammaticalNumberFix(msg, (m.cparam or m.param), m.message)
                     end
@@ -325,7 +369,7 @@ actionhandlers.parse_action_packet = function(act)
                     end
                 end
 
-                local roll = gProfileSettings.mode.showrollinfo and act.category == 6 and corsair_rolls[act.param] and corsair_rolls[act.param][m.param] or ''
+                local roll = gProfileSettings.mode.showrollinfo and act.category == 6 and UTF8toSJIS:UTF8_to_SJIS_str_cnv(corsair_rolls[gProfileSettings.lang.msg_text][act.param] and corsair_rolls[gProfileSettings.lang.msg_text][act.param][m.param] or '')
                 local reaction_lookup = reaction_offsets[act.category] and (m.reaction - reaction_offsets[act.category]) or 0
                 local has_line_break = string.find(res_actmsg[m.message][gProfileSettings.lang.msg_text], '${lb}') and true or false
                 local prefix = (not has_line_break or gProfileSettings.mode.simplify) and gActionHandlers.GetPrefix(act.category, m.effect, m.message, m.unknown, reaction_lookup) or ''
@@ -359,17 +403,21 @@ actionhandlers.parse_action_packet = function(act)
                 local targ = gActionHandlers.AssembleTargets(act.actor, v.target, act.category, m.add_effect_message, m.has_add_effect)
                 local col = res_actmsg[m.add_effect_message].color
                 local color = gActionHandlers.ColorFilt(col, v.target[1].server_id == Self.ServerId)
-                if m.add_effect_message > 287 and m.add_effect_message < 303 then m.simp_add_name = skillchain_arr[m.add_effect_message-287]
-                elseif m.add_effect_message > 384 and m.add_effect_message < 399 then m.simp_add_name = skillchain_arr[m.add_effect_message-384]
-                elseif m.add_effect_message > 766 and m.add_effect_message < 769 then m.simp_add_name = skillchain_arr[m.add_effect_message-752]
-                elseif m.add_effect_message > 768 and m.add_effect_message < 771 then m.simp_add_name = skillchain_arr[m.add_effect_message-754]
+                if m.add_effect_message > 287 and m.add_effect_message < 303 then m.simp_add_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv(skillchain_arr[gProfileSettings.lang.msg_text][m.add_effect_message-287])
+                elseif m.add_effect_message > 384 and m.add_effect_message < 399 then m.simp_add_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv(skillchain_arr[gProfileSettings.lang.msg_text][m.add_effect_message-384])
+                elseif m.add_effect_message > 766 and m.add_effect_message < 769 then m.simp_add_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv(skillchain_arr[gProfileSettings.lang.msg_text][m.add_effect_message-752])
+                elseif m.add_effect_message > 768 and m.add_effect_message < 771 then m.simp_add_name = UTF8toSJIS:UTF8_to_SJIS_str_cnv(skillchain_arr[gProfileSettings.lang.msg_text][m.add_effect_message-754])
                 elseif m.add_effect_message == 603 then m.simp_add_name = 'AE: TH'
                 elseif m.add_effect_message == 605 then m.simp_add_name = 'AE: Death'
                 elseif m.add_effect_message == 776 then m.simp_add_name = 'AE: Chainbound'
                 else m.simp_add_name = 'AE'
                 end
                 local msg, numb = gActionHandlers.SimplifyMessage(m.add_effect_message)
-                if not gProfileSettings.mode.simplify then
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text == 'jp' then
+                    msg = UTF8toSJIS:UTF8_to_SJIS_str_cnv(msg)
+                end
+
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text ~= 'jp' then
                     if col == 'D' or grammar_numb_msg:contains(m.add_effect_message) then
                         msg = gFuncs.GrammaticalNumberFix(msg, (m.cparam or m.param), m.add_effect_message)
                     end
@@ -430,7 +478,10 @@ actionhandlers.parse_action_packet = function(act)
                 end
 
                 local msg = gActionHandlers.SimplifyMessage(m.spike_effect_message)
-                if not gProfileSettings.mode.simplify then
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text == 'jp' then
+                    msg = UTF8toSJIS:UTF8_to_SJIS_str_cnv(msg)
+                end
+                if not gProfileSettings.mode.simplify and gProfileSettings.lang.msg_text ~= 'jp' then
                     if col == 'D' or grammar_numb_msg:contains(m.spike_effect_message) then
                         msg = gFuncs.GrammaticalNumberFix(msg, (m.cparam or m.param), m.spike_effect_message)
                     end
@@ -758,7 +809,10 @@ actionhandlers.AssembleTargets = function (actor, targs, category, msg, add_effe
 
     for i, v in pairs(targets) do
         local name = string.gsub(v.name,' ', string.char(0x81,0x3F)) --fix for ffxi chat splits on space
-        local article = common_nouns:contains(v.id) and (not gProfileSettings.mode.simplify or msg == 206) and 'The ' or ''
+        local article = ''
+        if gProfileSettings.lang.msg_text ~= 'jp' then
+            article = common_nouns:contains(v.id) and (not gProfileSettings.mode.simplify or msg == 206) and 'The ' or ''
+        end
         local numb = gProfileSettings.mode.condensetargetname and samename[v.name] > 1 and ' {'..samename[v.name]..'}' or ''
         if i == 1 then
             name = gFuncs.ColorIt(name, gProfileColor[v.owner or v.type])..v.owner_name
@@ -898,7 +952,7 @@ actionhandlers.SpellParse = function (act)
     if act.category == 1 then
         spell.data = {Name = {1, 2}}
         spell.data.Name[1] = 'hit'
-        spell.data.Name[2] = '攻撃'
+        spell.data.Name[2] = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の攻撃')
     elseif act.category == 2 and act.category == 12 then
         if msg_ID == 77 then
             spell.data = get_job_ability[171] -- Sange
@@ -913,16 +967,16 @@ actionhandlers.SpellParse = function (act)
         else
             spell.data = {Name = {1, 2}}
             spell.data.Name[1] = 'Ranged Attack'
-            spell.data.Name[2] = '遠隔攻撃'
+            spell.data.Name[2] = UTF8toSJIS:UTF8_to_SJIS_str_cnv('の遠隔攻撃')
         end
     elseif msg_ID == 673 then
         spell.data = {Name = {1, 2}}
         spell.data.Name[1] = 'Mweya Plasm'
-        spell.data.Name[2] = 'スピリットプラスム'
+        spell.data.Name[2] = UTF8toSJIS:UTF8_to_SJIS_str_cnv('スピリットプラスム')
     elseif msg_ID == 105 then
         spell.data = {Name = {1, 2}}
         spell.data.Name[1] = 'Experience Points'
-        spell.data.Name[2] = '体験ポイント'
+        spell.data.Name[2] = UTF8toSJIS:UTF8_to_SJIS_str_cnv('経験値を')
     else
         if not res_actmsg[msg_ID] then
             if T{4, 8}:contains(act['category']) then
@@ -966,7 +1020,7 @@ actionhandlers.SpellParse = function (act)
                 if not spell.data then
                     spell.data = {Name = {1, 2}}
                     spell.data.Name[1] = 'Special Attack'
-                    spell.data.Name[2] = '必殺技'
+                    spell.data.Name[2] = UTF8toSJIS:UTF8_to_SJIS_str_cnv('必殺技')
                 end
             elseif abil_ID <= 256 then
                 spell.data = get_weapon_skill[abil_ID]

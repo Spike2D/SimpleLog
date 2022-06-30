@@ -175,7 +175,11 @@ local Conjunctions = function (pre, post, target_count, current)
 		if gProfileSettings.mode.oxford and target_count > 2 then
 			pre = pre..','
 		end
-		pre = pre..' and '
+        if gProfileSettings.lang.msg_text == 'jp' then
+            pre = pre..' '..UTF8toSJIS:UTF8_to_SJIS_str_cnv('と')..' '
+        else
+            pre = pre..' and '
+        end
 	end
 	return pre..post
 end

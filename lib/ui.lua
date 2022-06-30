@@ -267,7 +267,7 @@ ui.render_config = function(toggle)
                         if imgui.Selectable('Japanese', choice == 2) then
                             gProfileSettings.lang.object = 2
                             gProfileSettings.lang.internal = 1
-                            gProfileSettings.lang.msg_text = 'en'
+                            gProfileSettings.lang.msg_text = 'jp'
                         end
                         imgui.EndCombo()
                     end

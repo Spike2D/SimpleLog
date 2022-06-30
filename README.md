@@ -12,7 +12,7 @@ Combat and Message log parser for Ashita v4
 - **(New)** In-game configuration menu
 
 # Commands
-- **/simplelog** or **/sl** - Calls the configuration menu.
+- **/simplelog** or **/slog** - Calls the configuration menu.
 
 # Planned features
 - Language selection

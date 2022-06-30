@@ -1,5 +1,5 @@
 -- Helpers
-skillchain_arr = {'Light:','Darkness:','Gravitation:','Fragmentation:','Distortion:','Fusion:','Compression:','Liquefaction:','Induration:','Reverberation:','Transfixion:','Scission:','Detonation:','Impaction:','Radiance:','Umbra:'}
+skillchain_arr = { en = {'Light:','Darkness:','Gravitation:','Fragmentation:','Distortion:','Fusion:','Compression:','Liquefaction:','Induration:','Reverberation:','Transfixion:','Scission:','Detonation:','Impaction:','Radiance:','Umbra:'}, jp = {'光:','闇:','重力:','分解:','湾曲:','核熱:','収縮:','溶解:','硬化:','振動:','貫通:','切断:','炸裂:','衝撃:','極光:','黒闇:'}}
 ratings_arr = {'TW','IEP','EP','DC','EM','T','VT','IT'}
 parse_quantity = false
 targets_condensed = false
@@ -157,37 +157,72 @@ replacements_map = {
 }
 
 corsair_rolls = {
-    [98] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},      -- Fighter's Roll
-    [99] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},      -- Monk's Roll
-    [100] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Healer's Roll
-    [101] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Wizard's Roll
-    [102] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Warlock's Roll
-    [103] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Rogue's Roll
-    [104] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Gallant's Roll
-    [105] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Chaos Roll
-    [106] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Beast Roll
-    [107] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Choral Roll
-    [108] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Hunter's Roll
-    [109] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Samurai Roll
-    [110] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Ninja Roll
-    [111] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Drachen Roll
-    [112] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Evoker's Roll
-    [113] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Magus's Roll
-    [114] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Corsair's Roll
-    [115] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Puppet Roll
-    [116] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Dancer's Roll
-    [117] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Scholar's Roll
-    [118] = {[3] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Bolter's Roll
-    [119] = {[2] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Caster's Roll
-    [120] = {[3] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Courser's Roll
-    [121] = {[4] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Blitzer's Roll
-    [122] = {[5] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Tactician's Roll
-    [302] = {[3] = ' (Lucky Roll!)', [10] = ' (Unlucky Roll!)'},    -- Allies' Roll
-    [303] = {[5] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Miser's Roll
-    [304] = {[2] = ' (Lucky Roll!)', [10] = ' (Unlucky Roll!)'},    -- Companion's Roll
-    [305] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Avenger's Roll
-    [390] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Naturalit's Roll
-    [391] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Runeist's Roll
+	en = {
+		[98] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},      -- Fighter's Roll
+		[99] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},      -- Monk's Roll
+		[100] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Healer's Roll
+		[101] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Wizard's Roll
+		[102] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Warlock's Roll
+		[103] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Rogue's Roll
+		[104] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Gallant's Roll
+		[105] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Chaos Roll
+		[106] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Beast Roll
+		[107] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Choral Roll
+		[108] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Hunter's Roll
+		[109] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Samurai Roll
+		[110] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Ninja Roll
+		[111] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Drachen Roll
+		[112] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Evoker's Roll
+		[113] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Magus's Roll
+		[114] = {[5] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Corsair's Roll
+		[115] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Puppet Roll
+		[116] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Dancer's Roll
+		[117] = {[2] = ' (Lucky Roll!)', [6] = ' (Unlucky Roll!)'},     -- Scholar's Roll
+		[118] = {[3] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Bolter's Roll
+		[119] = {[2] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Caster's Roll
+		[120] = {[3] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Courser's Roll
+		[121] = {[4] = ' (Lucky Roll!)', [9] = ' (Unlucky Roll!)'},     -- Blitzer's Roll
+		[122] = {[5] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Tactician's Roll
+		[302] = {[3] = ' (Lucky Roll!)', [10] = ' (Unlucky Roll!)'},    -- Allies' Roll
+		[303] = {[5] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Miser's Roll
+		[304] = {[2] = ' (Lucky Roll!)', [10] = ' (Unlucky Roll!)'},    -- Companion's Roll
+		[305] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Avenger's Roll
+		[390] = {[3] = ' (Lucky Roll!)', [7] = ' (Unlucky Roll!)'},     -- Naturalit's Roll
+		[391] = {[4] = ' (Lucky Roll!)', [8] = ' (Unlucky Roll!)'},     -- Runeist's Roll
+	},
+	jp = {
+		[98] = {[5] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},      -- Fighter's Roll
+		[99] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},      -- Monk's Roll
+		[100] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Healer's Roll
+		[101] = {[5] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Wizard's Roll
+		[102] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Warlock's Roll
+		[103] = {[5] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Rogue's Roll
+		[104] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Gallant's Roll
+		[105] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Chaos Roll
+		[106] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Beast Roll
+		[107] = {[2] = ' (運のよい転がし!)', [6] = ' (不運い転がし!)'},     -- Choral Roll
+		[108] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Hunter's Roll
+		[109] = {[2] = ' (運のよい転がし!)', [6] = ' (不運い転がし!)'},     -- Samurai Roll
+		[110] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Ninja Roll
+		[111] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Drachen Roll
+		[112] = {[5] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Evoker's Roll
+		[113] = {[2] = ' (運のよい転がし!)', [6] = ' (不運い転がし!)'},     -- Magus's Roll
+		[114] = {[5] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Corsair's Roll
+		[115] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Puppet Roll
+		[116] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Dancer's Roll
+		[117] = {[2] = ' (運のよい転がし!)', [6] = ' (不運い転がし!)'},     -- Scholar's Roll
+		[118] = {[3] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Bolter's Roll
+		[119] = {[2] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Caster's Roll
+		[120] = {[3] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Courser's Roll
+		[121] = {[4] = ' (運のよい転がし!)', [9] = ' (不運い転がし!)'},     -- Blitzer's Roll
+		[122] = {[5] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Tactician's Roll
+		[302] = {[3] = ' (運のよい転がし!)', [10] = ' (不運い転がし!)'},    -- Allies' Roll
+		[303] = {[5] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Miser's Roll
+		[304] = {[2] = ' (運のよい転がし!)', [10] = ' (不運い転がし!)'},    -- Companion's Roll
+		[305] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Avenger's Roll
+		[390] = {[3] = ' (運のよい転がし!)', [7] = ' (不運い転がし!)'},     -- Naturalit's Roll
+		[391] = {[4] = ' (運のよい転がし!)', [8] = ' (不運い転がし!)'},     -- Runeist's Roll
+	}
 }
 
 reaction_offsets = {
@@ -644,4 +679,5 @@ get_mon_skill = nil
 get_mon_ability = nil
 get_spell = nil
 get_item = nil
+debug = false
 
