@@ -369,7 +369,7 @@ actionhandlers.parse_action_packet = function(act)
                     end
                 end
 
-                local roll = gProfileSettings.mode.showrollinfo and act.category == 6 and UTF8toSJIS:UTF8_to_SJIS_str_cnv(corsair_rolls[gProfileSettings.lang.msg_text][act.param] and corsair_rolls[gProfileSettings.lang.msg_text][act.param][m.param] or '')
+                local roll = gProfileSettings.mode.showrollinfo and act.category == 6 and UTF8toSJIS:UTF8_to_SJIS_str_cnv(corsair_rolls[gProfileSettings.lang.msg_text][act.param] and corsair_rolls[gProfileSettings.lang.msg_text][act.param][m.param] or '') or ''
                 local reaction_lookup = reaction_offsets[act.category] and (m.reaction - reaction_offsets[act.category]) or 0
                 local has_line_break = string.find(res_actmsg[m.message][gProfileSettings.lang.msg_text], '${lb}') and true or false
                 local prefix = (not has_line_break or gProfileSettings.mode.simplify) and gActionHandlers.GetPrefix(act.category, m.effect, m.message, m.unknown, reaction_lookup) or ''

@@ -312,6 +312,15 @@ end
 
 packethandlers.multi_packet = function(...)
     local ind = table.concat({...}, ' ')
+    -- Check for duplicated packets
+    local isDupe = {}
+    for i,v in pairs(multi_targs[ind]) do
+        local id = multi_targs[ind][i].id
+        if isDupe[id] then
+            table.remove(multi_targs[ind], i)
+        end
+        isDupe[id] = i
+    end
     local targets = gActionHandlers.AssembleTargets(multi_actor[ind], multi_targs[ind], 0, multi_msg[ind])
     local msg = nil
     if gProfileSettings.lang.msg_text == 'jp' then
