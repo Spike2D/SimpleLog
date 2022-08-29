@@ -49,17 +49,17 @@ end
 
 -- trying to identify possible dupes
 local reference_buffer = {};
-packethandlers.check_duplicates = function(e)
-    -- resets dupe buffer when starting a new chunk
+
+function check_duplicates(e)
     if ffi.C.memcmp(e.data_raw, e.chunk_data_raw, e.size) == 0 then
-        if cross_checks >= 15 then
+        if cross_checks >= 20 then
             reference_buffer = {};
             cross_checks = 0;
         else
             cross_checks = cross_checks + 1;
         end
     end
-    -- current packet as char{size}
+    
     local packet = struct.unpack('c' .. e.size, e.data, 1)
     local offset = 0;
     
@@ -69,10 +69,7 @@ packethandlers.check_duplicates = function(e)
         local chunk_packet = struct.unpack('c' .. size, e.chunk_data, offset + 1);
 
         if (ffi.C.memcmp(packet, chunk_packet, e.size) == 0) then
-            -- if i put a comment here, the comparison works
             for i, _ in pairs(reference_buffer) do
-                -- but it seems that it never works in this case
-                -- although it keeps sending duplicate packets
                 if (ffi.C.memcmp(packet, reference_buffer[i], e.size) == 0) then
                     e.blocked = true
                     return true
@@ -136,7 +133,7 @@ end
 
 packethandlers.HandleIncomingPacket = function(e)
     
-    if packethandlers.check_duplicates(e) then return end
+    if check_duplicates(e) then return end
 
 	if (e.id == 0x00A) then
 		gPacketHandlers.HandleIncoming0x00A(e);
