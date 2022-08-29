@@ -48,39 +48,39 @@ function to_string( tbl )
 end
 
 -- trying to identify possible dupes
-local reference_buffer = {};
-
+local last_chunk_buffer;
+local reference_buffer = T{};
 function check_duplicates(e)
     if ffi.C.memcmp(e.data_raw, e.chunk_data_raw, e.size) == 0 then
-        if cross_checks >= 20 then
-            reference_buffer = {};
-            cross_checks = 0;
-        else
-            cross_checks = cross_checks + 1;
+        if #reference_buffer > 2 then
+            reference_buffer[#reference_buffer] = nil
         end
-    end
-    
-    local packet = struct.unpack('c' .. e.size, e.data, 1)
-    local offset = 0;
-    
-    while(offset < e.chunk_size) do
-        local size = ashita.bits.unpack_be(e.chunk_data_raw, offset, 9, 7) * 4;
-        
-        local chunk_packet = struct.unpack('c' .. size, e.chunk_data, offset + 1);
 
-        if (ffi.C.memcmp(packet, chunk_packet, e.size) == 0) then
-            for i, _ in pairs(reference_buffer) do
-                if (ffi.C.memcmp(packet, reference_buffer[i], e.size) == 0) then
-                    e.blocked = true
-                    return true
-                end
-            end
-            -- Found a packet so we return early and add it as a reference
-            table.insert(reference_buffer, packet);
+        if last_chunk_buffer then
+            table.insert(reference_buffer, 1, last_chunk_buffer)
         end
-        offset = offset + size;
+
+        last_chunk_buffer = T{};
+        local offset = 0;
+    
+        while (offset < e.chunk_size) do
+            local size = ashita.bits.unpack_be(e.chunk_data_raw, offset, 9, 7) * 4;
+            local chunk_packet = struct.unpack('c' .. size, e.chunk_data, offset + 1);
+            last_chunk_buffer:append(chunk_packet)
+            offset = offset + size;
+        end
     end
-    return false;
+
+    local packet = struct.unpack('c' .. e.size, e.data, 1)
+    for _, chunk in ipairs(reference_buffer) do
+        for _, bufferEntry in ipairs(chunk) do
+            if packet == bufferEntry then
+                e.blocked = true
+                return true
+            end
+        end
+    end
+    return false
 end
 
 packethandlers.HandleIncoming0x00A = function(e)
