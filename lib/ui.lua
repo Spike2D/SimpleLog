@@ -802,11 +802,10 @@ ui.render_config = function(toggle)
                     end
 
                     ui.updatecolors()
-
                     local colors_inputbox = {}
                     for i, v in ipairs(color_info.color_order) do
                         imgui.PushItemWidth(30)
-                        colors_inputbox[i] = imgui.InputInt(('##%s'):fmt(color_info.color_order[i]), color_info.color_inputs[v], 0)
+                        colors_inputbox[i] = imgui.InputInt(('##%s'):fmt(v), color_info.color_inputs[v], 0)
                         if colors_inputbox[i] then
                             gProfileColor[v] = tonumber(color_info.color_inputs[v][1])
                         end
@@ -831,39 +830,13 @@ ui.render_config = function(toggle)
 end
 
 ui.updatecolors = function ()
-    color_info.color_inputs.mob = { gProfileColor.mob }
-    color_info.color_inputs.other = { gProfileColor.other }
-    color_info.color_inputs.p0 = { gProfileColor.p0 }
-    color_info.color_inputs.p1 = { gProfileColor.p1 }
-    color_info.color_inputs.p2 = { gProfileColor.p2 }
-    color_info.color_inputs.p3 = { gProfileColor.p3 }
-    color_info.color_inputs.p4 = { gProfileColor.p4 }
-    color_info.color_inputs.p5 = { gProfileColor.p5 }
-    color_info.color_inputs.a10 = { gProfileColor.a10 }
-    color_info.color_inputs.a11 = { gProfileColor.a11 }
-    color_info.color_inputs.a12 = { gProfileColor.a12 }
-    color_info.color_inputs.a13 = { gProfileColor.a13 }
-    color_info.color_inputs.a14 = { gProfileColor.a14 }
-    color_info.color_inputs.a15 = { gProfileColor.a15 }
-    color_info.color_inputs.a20 = { gProfileColor.a20 }
-    color_info.color_inputs.a21 = { gProfileColor.a21 }
-    color_info.color_inputs.a22 = { gProfileColor.a22 }
-    color_info.color_inputs.a23 = { gProfileColor.a23 }
-    color_info.color_inputs.a24 = { gProfileColor.a24 }
-    color_info.color_inputs.a25 = { gProfileColor.a25 }
-    color_info.color_inputs.mobdmg = { gProfileColor.mobdmg }
-    color_info.color_inputs.mydmg = { gProfileColor.mydmg }
-    color_info.color_inputs.partydmg = { gProfileColor.partydmg }
-    color_info.color_inputs.allydmg = { gProfileColor.allydmg }
-    color_info.color_inputs.otherdmg = { gProfileColor.otherdmg }
-    color_info.color_inputs.spellcol = { gProfileColor.spellcol }
-    color_info.color_inputs.mobspellcol = { gProfileColor.mobspellcol }
-    color_info.color_inputs.abilcol = { gProfileColor.abilcol }
-    color_info.color_inputs.wscol = { gProfileColor.wscol }
-    color_info.color_inputs.mobwscol = { gProfileColor.mobwscol }
-    color_info.color_inputs.statuscol = { gProfileColor.statuscol }
-    color_info.color_inputs.enfeebcol = { gProfileColor.enfeebcol }
-    color_info.color_inputs.itemcol = { gProfileColor.itemcol }
+    for i, v in pairs(gProfileColor) do
+        if type(v) == 'table' then
+            color_info.color_inputs[i] = v
+        else
+            color_info.color_inputs[i] = T{ v }
+        end
+    end
 end
 
 ui.save_changes = function ()
@@ -878,6 +851,7 @@ ui.save_changes = function ()
     else
         gFileTools.SaveChanges(defaultFiltersFile, gProfileFilter, 'filters')
     end
+    
     gFileTools.SaveChanges(defaultColorsFile, gProfileColor, 'colors')
     print(chat.header('SimpleLog')..chat.success('All changes Saved'))
 end
