@@ -88,12 +88,10 @@ packethandlers.HandleIncoming0x28 = function(e)
 end
 
 packethandlers.HandleIncomingPacket = function(e)
-    
-    if check_duplicates(e) then return end
-
 	if (e.id == 0x00A) then
 		gPacketHandlers.HandleIncoming0x00A(e);
     elseif (e.id == 0x28) then
+        if check_duplicates(e) then return end
         e.data_modified = gPacketHandlers.HandleIncoming0x28(e);
     end
 
@@ -133,6 +131,8 @@ packethandlers.HandleIncomingPacket = function(e)
 
 ------- ACTION MESSAGE -------
     elseif e.id == 0x29 then
+        if check_duplicates(e) then return end
+
         local am = {}
         am.actor_id = struct.unpack('I', e.data, 0x05)
         am.target_id = struct.unpack('I', e.data, 0x09)

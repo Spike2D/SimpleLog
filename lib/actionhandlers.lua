@@ -848,7 +848,8 @@ actionhandlers.ActorParse = function (actor_id)
     local actor_name, typ, dmg, owner, filt, owner_name
 
     if actor_table == nil then
-        return {name= nil, id=nil, is_npc=nil, type='debug', owner=nil, owner_name=nil, race=nil}
+        --return {name= nil, id=nil, is_npc=nil, type='debug', owner=nil, owner_name=nil, race=nil}
+        return {name= ('{Debug ID: %s}'):fmt(actor_id), id= '{DebugID}', is_npc= true, type= 'debug', damage= 'otherdmg', filter= 'others', owner= 'other', owner_name= '{Owner}', race= 0}
     end
 
     local ActorIsNpc = bit.band(actor_table.SpawnFlags, 0x1) == 0
