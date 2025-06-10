@@ -185,6 +185,8 @@ end
 
 ui.render_config = function(toggle)
     if toggle then
+        state = (not ui.state.open[1] and "Opening") or "Closing"
+        print(chat.header('SimpleLog')..chat.message(state .. ' menu...'))
         ui.state.open[1] = not ui.state.open[1]
         --print('settings open: '..tostring(ui.state.open))
     end

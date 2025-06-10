@@ -9,7 +9,6 @@ commands.HandleCommand = function(e)
     e.blocked = true
 
     if (#args == 1 and args[1]:any('/simplelog', '/slog')) then
-        print(chat.header('SimpleLog')..chat.message('Opening menu...'))
         gConfig.toggle_menu(1)
     end
     if (#args == 2 and args[2]:any('build_msg')) then
