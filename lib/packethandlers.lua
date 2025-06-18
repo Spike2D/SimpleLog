@@ -161,7 +161,7 @@ packethandlers.HandleIncomingPacket = function(e)
         -- Filter these messages
         if not gFuncs.CheckFilter(actor, target, 0, am.message_id) then e.blocked = true end
 
-        if not actor or not target then -- If the actor or target table is nil, ignore the packet
+        if not actor or not target or e.blocked then -- If the actor or target table is nil or the packet should be blocked, ignore the packet
         elseif am.message_id == 800 then -- Spirit bond message
             local status = gFuncs.ColorIt(AshitaCore:GetResourceManager():GetString('buffs.names', am.param_1, gProfileSettings.lang.internal), gProfileColor.statuscol)
             local targ = gFuncs.ColorIt(target.name or '', gProfileColor[target.owner or target.type])
