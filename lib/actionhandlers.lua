@@ -941,12 +941,13 @@ end
 
 actionhandlers.SpellParse = function (act)
     local spell, abil_ID, effect_val = {}
-    -- If the target returns nil, will return No MSG instad of crashing.
-    -- This is a bandaid
-    if(act.targets[1] == nil) then
-        return false;
+    -- Check for nil and set message
+    local msg_ID = -1
+    if (act.targets[1] ~= nil) then
+        if (act.targets[1].actions[1] ~= nil) then
+            msg_ID = act.targets[1].actions[1].message
+        end
     end
-    local msg_ID = act.targets[1].actions[1].message
 
     if T{7, 8, 9}:contains(act.category) then
         abil_ID = act.targets[1].actions[1].param
