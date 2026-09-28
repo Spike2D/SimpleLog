@@ -6,6 +6,7 @@ actionhandlers.parse_action_packet = function(act)
     if not Self then
         Self = GetPlayerEntity()
         if not Self then
+            act.skip_rewrite = true
             return act
         end
     end
@@ -13,12 +14,26 @@ actionhandlers.parse_action_packet = function(act)
     if not SelfPlayer then
         SelfPlayer = AshitaCore:GetMemoryManager():GetPlayer()
         if not SelfPlayer then
+            act.skip_rewrite = true
             return act
         end
     end
 
     -- Constructing table from act to work with, gathering info
 	act.actor = gActionHandlers.ActorParse(act.actor_id)
+    if not act.actor.filter or act.actor.type == 'debug' then
+        act.skip_rewrite = true
+        return act
+    end
+
+    for _, target in ipairs(act.targets) do
+        target.target = {gActionHandlers.ActorParse(target.server_id)}
+        if not target.target[1].filter or target.target[1].type == 'debug' then
+            act.skip_rewrite = true
+            return act
+        end
+    end
+
     act.action = gActionHandlers.SpellParse(act)
     act.actor.name = act.actor and act.actor.name and string.gsub(act.actor.name,'[- ]', {['-'] = string.char(0x81,0x7C), [' '] = string.char(0x81,0x3F)}) --fix for ffxi chat splits on trusts with - and spaces
     targets_condensed = false
@@ -29,8 +44,6 @@ actionhandlers.parse_action_packet = function(act)
     end
 
     for i, v in ipairs(act.targets) do
-        v.target = {}
-        v.target[1] = gActionHandlers.ActorParse(v.server_id)
         if #v.actions > 1 then
             for n, m in ipairs(v.actions) do
                 if res_actmsg[m.message] then m.fields = gFuncs.SearchField(res_actmsg[m.message][gProfileSettings.lang.msg_text]) end

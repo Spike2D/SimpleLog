@@ -86,7 +86,11 @@ packethandlers.HandleIncoming0x28 = function(e)
 	local act_mod = gActionHandlers.StringToAct(e.data_modified)
 	act_mod.size = e.data_modified:byte(5)
 
-	return gActionHandlers.ActToString(e.data, gActionHandlers.parse_action_packet(act_org, act_mod))
+    local parsed = gActionHandlers.parse_action_packet(act_org, act_mod)
+    if parsed.skip_rewrite then
+        return e.data
+    end
+	return gActionHandlers.ActToString(e.data, parsed)
 end
 
 packethandlers.HandleIncomingPacket = function(e)
